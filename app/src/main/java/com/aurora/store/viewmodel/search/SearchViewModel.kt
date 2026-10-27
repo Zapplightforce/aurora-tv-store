@@ -20,13 +20,13 @@ import com.aurora.gplayapi.data.models.App
 import com.aurora.gplayapi.data.models.StreamCluster
 import com.aurora.gplayapi.exceptions.GooglePlayException
 import com.aurora.gplayapi.helpers.contracts.SearchContract
-import com.aurora.gplayapi.helpers.web.WebSearchHelper
 import com.aurora.store.AuroraApp
 import com.aurora.store.data.PageResult
 import com.aurora.store.data.event.AuthEvent
 import com.aurora.store.data.model.SearchFilter
 import com.aurora.store.data.paging.GenericPagingSource.Companion.manualPager
 import com.aurora.store.data.providers.AuthProvider
+import com.aurora.store.data.search.SearchBridge
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
@@ -43,11 +43,11 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     val authProvider: AuthProvider,
-    private val webSearchHelper: WebSearchHelper
+    private val searchBridge: SearchBridge
 ) : ViewModel() {
 
     private val contract: SearchContract
-        get() = webSearchHelper
+        get() = searchBridge
 
     private val _suggestions = MutableStateFlow<List<SearchSuggestEntry>>(emptyList())
     val suggestions = _suggestions.asStateFlow()
